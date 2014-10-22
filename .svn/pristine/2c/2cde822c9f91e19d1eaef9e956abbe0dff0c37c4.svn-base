@@ -1,0 +1,115 @@
+function network_analyse()
+{
+	var attrselected=$("#select2 option");
+	var ids="";
+	for(var i=0;i<attrselected.length;i++)
+	{
+		ids+=attrselected.eq(i).val()+",";
+	}
+	ids=ids.substring(0, ids.length-1)
+	var lift=$("#lift").val();
+	var conf=$("#conf").val();
+	
+	
+	/*if(ids==""||center==null||itermax==null||nstart==null||algorithm==null)
+	{
+		alert("参数不得为空！");
+		return false;
+	}*/
+	$("#main").mask("关联规则分析，请稍后...");
+	$.post("apriori",
+	{
+		ids:ids,
+		lift:lift,
+		conf:conf
+	},
+	function(returnedData, status) {
+		if("success"==status)
+		{
+			var obj=eval(returnedData);
+			var imagename=obj.imagename;
+			$("#result").empty();
+			
+
+			var allrules=obj.allrules;
+			var aprinfo=obj.aprinfo;
+			html="";
+			html=html+"<div class='tabletitle'>关联规则分析结果</div>" +
+					"<table width='100%' class='table table-hover'><thead><tr class='theadstyle'>";
+			html=html+"<tr>" +
+					"<th>序号</th>" +
+					"<th>规则</th>" +
+					"<th>支持度</th>" +
+					"<th>置信度</th>" +
+					"<th>提升度</th></tr></thead>";
+			
+			for(var i=0;i<allrules.length;i++){
+				html=html+"<tr>" +
+						"<td>["+(i+1)+"]</td>" +
+						"<td>"+allrules[i]+"</td>" +
+						"<td>"+aprinfo[i][0].toFixed(4)+"</td>" +
+						"<td>"+aprinfo[i][1].toFixed(4)+"</td>" +
+						"<td>"+aprinfo[i][2].toFixed(4)+"</td>" +
+						"</tr>";
+			}
+			html=html+"</table>";
+			$("#result").append(html);
+			
+			html="";
+			html=html+"<div align='center'><img width=600px height=600px  src='"+spath+"/rimages/"+imagename+"'></div>";
+			$("#result").append(html);
+			$("#main").unmask();
+		}
+	})
+}
+
+
+
+function readNameFile(id){
+	$.post("readFileDatasetJson.action",
+	{
+		sid:id
+	},
+	function(returnedData, status)
+	{
+		if("success"==status)
+		{
+			var obj=eval(returnedData);
+			var datacolnames=obj.datacolnames;
+			$("#role").empty();
+			for ( var i = 1; i < datacolnames.length; i++) {
+				$("#role").append("<option>"+datacolnames[i]+"</option>");
+			}
+			
+			$("#namedialog").dialog("close");
+			
+		}
+	}
+	)
+}
+
+
+function readLinkFile(id){
+	$.post("readFileDatasetJson.action",
+	{
+		sid:id
+	},
+	function(returnedData, status)
+	{
+		if("success"==status)
+		{
+			var obj=eval(returnedData);
+			var datacolnames=obj.datacolnames;
+			$("#weight").empty();
+			for ( var i = 1; i < datacolnames.length; i++) {
+				$("#weight").append("<option>"+datacolnames[i]+"</option>");
+			}
+			
+			$("#linkdialog").dialog("close");
+			
+		}
+	}
+	)
+}
+
+

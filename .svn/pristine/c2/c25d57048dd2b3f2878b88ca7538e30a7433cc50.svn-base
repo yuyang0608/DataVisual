@@ -1,0 +1,83 @@
+function network_analyse()
+{
+	var attrselected=$("#select2 option");
+	var ids="";
+	for(var i=0;i<attrselected.length;i++)
+	{
+		ids+=attrselected.eq(i).val()+",";
+	}
+	ids=ids.substring(0, ids.length-1)
+
+	
+	
+	/*if(ids==""||center==null||itermax==null||nstart==null||algorithm==null)
+	{
+		alert("参数不得为空！");
+		return false;
+	}*/
+	$("#main").mask("社会网络分析，请稍后...");
+	$.post("network",
+	{
+		ids:ids
+	},
+	function(returnedData, status) {
+		if("success"==status)
+		{
+			var obj=eval(returnedData);
+			
+			alert(111)
+			$("#main").unmask();
+		}
+	})
+}
+
+
+
+function readNameFile(id){
+	$.post("readFileDatasetJson.action",
+	{
+		sid:id
+	},
+	function(returnedData, status)
+	{
+		if("success"==status)
+		{
+			var obj=eval(returnedData);
+			var datacolnames=obj.datacolnames;
+			$("#select1").empty();
+			for ( var i = 1; i < datacolnames.length; i++) {
+				$("#select1").append("<option>"+datacolnames[i]+"</option>");
+			}
+			
+			$("#namedialog").dialog("close");
+			
+		}
+	}
+	)
+}
+
+
+function readLinkFile(id){
+	$.post("readFileDatasetJson.action",
+	{
+		sid:id
+	},
+	function(returnedData, status)
+	{
+		if("success"==status)
+		{
+			var obj=eval(returnedData);
+			var datacolnames=obj.datacolnames;
+			$("#select3").empty();
+			for ( var i = 1; i < datacolnames.length; i++) {
+				$("#select3").append("<option>"+datacolnames[i]+"</option>");
+			}
+			
+			$("#linkdialog").dialog("close");
+			
+		}
+	}
+	)
+}
+
+

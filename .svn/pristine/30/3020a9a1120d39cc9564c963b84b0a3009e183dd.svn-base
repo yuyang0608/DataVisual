@@ -1,0 +1,133 @@
+package com.dv.action;
+
+import java.util.Date;
+import java.util.List;
+
+import org.apache.struts2.ServletActionContext;
+import org.rosuda.JRI.Rengine;
+
+import com.dv.action.base.DataMiningBaseAction;
+import com.dv.util.Export_excelBean;
+import com.dv.util.Export_imageBean;
+import com.dv.util.StaticData;
+
+@SuppressWarnings("serial")
+public class Association extends DataMiningBaseAction{
+	private String ids;
+	private String center;//kmeans,clara,pam
+	private String itermax;//kmeans
+	//private String nstart;//kmeans
+	//private String algorithm;//kmeans
+	private String savaPath;
+	private String imagename;
+	private String imagename1;
+
+	private List<Export_excelBean> excellist=null;
+	private List<Export_imageBean> imagelist=null;
+
+	private int clustersize[]=null;
+	private String sample[]=null;
+	private double centers[][]=null;
+	private double medoids[][]=null;
+	private double clusinfo[][]=null;
+	
+
+	@SuppressWarnings("deprecation")
+	public String getSavaPath() {
+		return ServletActionContext.getRequest().getRealPath(savaPath);
+	}
+	public void setSavaPath(String savaPath) {
+		this.savaPath = savaPath;
+	}
+	
+	public String Apriori()
+	{
+		String imagepath=getSavaPath().replace("\\", "//")+"//";
+		System.out.println(imagepath);
+		imagename="result"+new Date().getTime()+".png";
+		imagename1="result1"+new Date().getTime()+".png";
+		StaticData sd = StaticData.getInstance();
+		sd.setAr();
+		Rengine c=sd.re;
+		c.eval("rules<-apriori(data);");
+
+		c.eval("{" +
+				"setwd('"+imagepath+"');" +
+				"png(file='"+imagename+"',bg='transparent');" +
+				"plot(rules, method='graph', control=list(type='items'));" +
+				"dev.off();" +
+				"}");
+		c.eval("rm('rules')");
+		return "apriori";
+	}
+
+	
+	public String getIds() {
+		return ids;
+	}
+
+	public void setIds(String ids) {
+		this.ids = ids;
+	}
+
+	public String getCenter() {
+		return center;
+	}
+
+	public void setCenter(String center) {
+		this.center = center;
+	}
+
+	public String getItermax() {
+		return itermax;
+	}
+
+	public void setItermax(String itermax) {
+		this.itermax = itermax;
+	}
+	
+	public String getImagename() {
+		return imagename;
+	}
+	public void setImagename(String imagename) {
+		this.imagename = imagename;
+	}
+	public String[] getSample() {
+		return sample;
+	}
+	public void setSample(String[] sample) {
+		this.sample = sample;
+	}
+	public double[][] getCenters() {
+		return centers;
+	}
+	public void setCenters(double[][] centers) {
+		this.centers = centers;
+	}
+
+	public double[][] getMedoids() {
+		return medoids;
+	}
+	public void setMedoids(double[][] medoids) {
+		this.medoids = medoids;
+	}
+	public double[][] getClusinfo() {
+		return clusinfo;
+	}
+	public void setClusinfo(double[][] clusinfo) {
+		this.clusinfo = clusinfo;
+	}
+	public String getImagename1() {
+		return imagename1;
+	}
+	public void setImagename1(String imagename1) {
+		this.imagename1 = imagename1;
+	}
+	public int[] getClustersize() {
+		return clustersize;
+	}
+	public void setClustersize(int[] clustersize) {
+		this.clustersize = clustersize;
+	}
+	
+}

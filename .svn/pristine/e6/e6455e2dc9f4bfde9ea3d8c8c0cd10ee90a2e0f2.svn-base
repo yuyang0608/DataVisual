@@ -1,0 +1,156 @@
+function kmeans_analyse()
+{
+	var attrselected=$("#select2 option");
+	var ids="";
+	for(var i=0;i<attrselected.length;i++)
+	{
+		ids+=attrselected.eq(i).val()+",";
+	}
+	ids=ids.substring(0, ids.length-1)
+	var center=$("#center").val();
+	var itermax=$("#itermax").val();
+	//var nstart=$("#nstart").val();
+	//var algorithm=$("#algorithm").val();
+	
+	/*if(ids==""||center==null||itermax==null||nstart==null||algorithm==null)
+	{
+		alert("参数不得为空！");
+		return false;
+	}*/
+	$("#main").mask("k-means算法分析，请稍后...");
+	$.post("kmeans",
+	{
+		ids:ids,
+		center:center,
+		itermax:itermax
+		//nstart:nstart,
+		//algorithm:algorithm
+	},
+	function(returnedData, status) {
+		if("success"==status)
+		{
+			var obj=eval(returnedData);
+			var imagename=obj.imagename;
+			var imagename1=obj.imagename1;
+			var clustersize=obj.clustersize;
+			var centers=obj.centers;
+			var select2=$("#select2 option");
+			$("#result").empty();
+			
+			pie3D();
+			var chart = $('#result').highcharts();
+			var piedata=new Array();
+			for(var i=0;i<clustersize.length;i++)
+			{
+				piedata[i]=new Array();
+				
+				piedata[i][0]="聚类簇"+(i+1);
+				piedata[i][1]=clustersize[i];
+				
+			}
+			chart.addSeries({data:piedata,name:"该簇占总数的百分比"});
+			
+			
+			$("#wj").removeAttr("style");
+			var html="<div><h3>各簇数据数目：";
+			for(var i=0;i<clustersize.length;i++){
+				html=html+clustersize[i]+"&nbsp;&nbsp;";
+			}
+			
+			html=html+"</div></h3><hr style='width:100%'/><div><h3>最佳中心点：</div></h3>" +
+					"<table width='100%' class='table table-condensed'><tr><th>序号</th>";
+			for(var i=0;i<select2.length;i++){
+				html=html+"<th>"+select2.eq(i).html()+"</th>";
+			}
+			html=html+"</tr>";
+			for(var i=0;i<centers.length;i++){
+				var arr_link=centers[i];
+			    html=html+"<tr><td>["+(i+1)+"]</td>";
+			    for(var j=0;j<arr_link.length;j++){
+			    	 html=html+"<td>"+arr_link[j]+"</td>";
+			    }
+			    html=html+"</tr>";
+			}
+			
+			html=html+"</table><hr style='width:100%;'><div><h3>聚类效果图：</h3></div><div><img src='"+spath+"/rimages/"+imagename+"'></div>";
+			//html+="<tr><td colspan='2'><img src='"+spath+"/rimages/"+imagename1+"'></td></tr></tbody>";
+			html=html+"<hr style='width:100%;'><div><h3>操作选项：&nbsp;&nbsp;<a style='color:#1841E2' href='"+spath+"/export/export_excel'>导出表格</a>&nbsp;&nbsp;&nbsp;&nbsp;"
+				+"<a style='color:#1841E2' href='"+spath+"/export/export_pdf'>导出图片</a></h3></div>";
+			$("#result").append(html);
+			$("#jg").attr("style","color:rgba(238,18,44,0.7)");
+			
+			
+			 
+			$("#main").unmask();
+			//alert("k-means算法分析完成！");
+		}
+	})
+}
+
+
+function pie(){
+	$('#result').highcharts({
+        chart: {
+			type: 'pie',
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+        title: {
+            text: '各簇数目所占比例（饼图）'
+        },
+        tooltip: {
+    	    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    color: '#000000',
+                    connectorColor: '#000000',
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                },
+                showInLegend: false
+            }
+        },
+        credits:{
+            enabled:false
+        }
+    });
+}
+
+function pie3D(){
+	$('#result').highcharts({
+        chart: {
+            type: 'pie',
+            options3d: {
+                enabled: true,
+                alpha: 45,
+                beta: 0
+            }
+        },
+        title: {
+            text: '各簇数目所占比例（饼图）'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                depth: 35,
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.name}'
+                }
+            }
+        },
+        credits:{
+            enabled:false
+        }
+    });
+}
+

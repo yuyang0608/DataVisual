@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	
+	<!-- 数据预处理 -->
+	<package name="missingdata" extends="json-default">
+		<action name="missdata" class="com.dv.action.DataPreparation" method="dealMissing">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="statinfo" class="com.dv.action.DataPreparation" method="statInfo">
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="resetbar" class="com.dv.action.DataPreparation" method="resetBar">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="sorthl" class="com.dv.action.DataPreparation" method="sortHighToLow">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="sortlh" class="com.dv.action.DataPreparation" method="sortLowToHigh">
+			<result name="success" type="json"></result>
+		</action>
+	</package>
+	<!-- 分类 -->
+	<package name="classification" extends="json-default">
+		<action name="dtree" class="com.dv.action.Classification" method="Dtree">
+			<param name="savaPath">/rimages</param>
+			<result name="dtree" type="json"></result>
+		</action>
+	</package>
+	
+	<!-- 聚类 -->
+	<package name="cluster" extends="json-default">
+		<action name="kmeans" class="com.dv.action.Cluster" method="Kmeans">
+			<param name="savaPath">/rimages</param>
+			<result name="kmeans" type="json"></result>
+		</action>
+	</package>
+	
+	<!-- 关联-->
+	<package name="association" extends="json-default">
+		<action name="apriori" class="com.dv.action.Association" method="Apriori">
+			<param name="savaPath">/rimages</param>
+			<result name="apriori" type="json"></result>
+		</action>
+	</package>
+	
+	<!-- 关联-->
+	<package name="network" extends="json-default">
+		<action name="network" class="com.dv.action.NetWork" method="network">
+			<param name="savaPath">/rimages</param>
+			<result name="network" type="json"></result>
+		</action>
+	</package>
+	
+</struts>
