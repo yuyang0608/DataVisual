@@ -49,7 +49,8 @@ public class Cluster extends DataMiningBaseAction{
 	
 	public String Kmeans()
 	{
-		String imagepath=getSavaPath().replace("\\", "//")+"//";
+		//String imagepath=getSavaPath().replace("\\", "//")+"//";
+		String imagepath=getSavaPath().replace("\\", "/")+"/"; //windows下路径格式
 		System.out.println(imagepath);
 		imagename="result"+new Date().getTime()+".png";
 		imagename1="result1"+new Date().getTime()+".png";

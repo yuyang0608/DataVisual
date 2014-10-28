@@ -41,7 +41,7 @@ function dtree_analyse()
 					$("#result").empty();
 					
 					$("#result").append("<div id='tree'></div>");
-					d3.json("iris2.json", load_dataset);
+					d3.json("iris2.json", load_dataset); //为何结果设置为固定文件名
 					
 					$("#result").append("<div id='forecast' style='display:none'></div>");
 					var html="";

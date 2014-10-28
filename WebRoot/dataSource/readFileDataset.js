@@ -1,7 +1,7 @@
 function readFileDataset(id){
 		$("#main").mask("读取数据集，请稍后...");
 		$.post("readFileDatasetJson.action",
-		{
+		{  
 			sid:id
 		},
 		function(returnedData, status)
