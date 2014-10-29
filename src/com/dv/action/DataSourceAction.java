@@ -120,7 +120,7 @@ public class DataSourceAction extends DataSourceBaseAction{
 		String filePath=(request.getRealPath("/datasets")+"\\"+fd.getFilepath()).replace("\\", "/");
 		StaticData sd = StaticData.getInstance();
 		sd.setAr();
-		Rengine c=sd.re;
+		Rengine c=sd.re; //jri接口，在java环境中调用R语言
 		
 		c.eval("rm(list=ls()");
 
@@ -132,7 +132,7 @@ public class DataSourceAction extends DataSourceBaseAction{
 		{
 			System.out.println("read.table");
 			picture="true";
-			c.eval("data<-read.table('"+filePath+"',header="+hasheadline+",sep='"+separator+"')");
+			c.eval("data<-read.table('"+filePath+"',header="+hasheadline+",sep='"+separator+"')"); //读取csv文件中的数据到R环境变量data中
 			c.eval("{rcolname<-names(data);dim(rcolname)<-c(length(names(data)))}");
 			String colnames[]=c.eval("rcolname").asStringArray();
 			datacolnames=new String[colnames.length+1];
