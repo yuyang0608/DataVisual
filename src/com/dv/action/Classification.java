@@ -51,16 +51,11 @@ public class Classification extends DataMiningBaseAction{
 	public String Dtree()
 	{
 <<<<<<< HEAD
-<<<<<<< HEAD
 		//String imagepath=getSavaPath().replace("\\", "//")+"//";
 		String imagepath=getSavaPath().replace("\\", "/") + "/"; //windows下路径格式
 =======
 		String imagepath=getSavaPath().replace("\\", "//")+"//";
 >>>>>>> parent of e68482c... 安装所需R语言�
-=======
-		//String imagepath=getSavaPath().replace("\\", "//")+"//";
-		String imagepath=getSavaPath().replace("\\", "/") + "/"; //windows下路径格式
->>>>>>> 50c8d69494b9dfcfa483bb69c81063b19e6944cb
 		System.out.println(imagepath);
 		imagename="result"+new Date().getTime()+".png";
 		Map<String,Object> session=ActionContext.getContext().getSession();

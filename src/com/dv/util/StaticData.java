@@ -30,8 +30,8 @@ public class StaticData
 		   re.eval("library(rminer)");
 		   re.eval("library(stats)");
 		   re.eval("library(cluster)");
-		   re.eval("library(arules)");    //需要安装arules包
-		   re.eval("library(arulesViz)"); //需要安装arulesViz包
+		   re.eval("library(arules)");
+		   re.eval("library(arulesViz)");
 	   }
 	   else{
 		   System.out.println("已经初始化！");
