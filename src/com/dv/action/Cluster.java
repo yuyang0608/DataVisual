@@ -59,7 +59,8 @@ public class Cluster extends DataMiningBaseAction{
 		Rengine c=sd.re;
 		Map<String,Object> session=ActionContext.getContext().getSession();
 		//c.eval("kc<-kmeans(x=na.omit(data[,c("+ids+")]),centers="+center+",iter.max="+itermax+",nstart="+nstart+",algorithm=c('"+algorithm+"'));");
-		c.eval("kc<-kmeans(x=na.omit(data[,c("+ids+")]),centers="+center+",iter.max="+itermax+");");
+		c.eval("kc<-kmeans(x=na.omit(data[,c("+ids+")])" +
+				",centers="+center+",iter.max="+itermax+");");
 		String picture=(String)session.get("picture");
 		if(picture.equals("true"))
 		{

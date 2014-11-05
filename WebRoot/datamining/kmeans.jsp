@@ -324,7 +324,8 @@ svg {
 	<script type="text/javascript">
 
 var species = ["setosa", "versicolor", "virginica"],
-    traits = ["sepal length", "petal length", "sepal width", "petal width"];
+    //traits = ["sepal length", "petal length", "sepal width", "petal width"];
+	traits = ["Sepal.Length", "Petal.Length", "Sepal.Width", "Petal.Width"];
 
 var m = [80, 160, 200, 160],
     w = 1180 - m[1] - m[3],
@@ -401,7 +402,7 @@ function brush() {
 		      .data(flowers)
 		    .enter().append("svg:path")
 		      .attr("d", path)
-		      .attr("class", function(d) { return d.species; });
+		      .attr("class", function(d) { return d.Species; });
 
 		  // Add a group element for each trait.
 		  var g = svg.selectAll(".trait")

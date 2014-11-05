@@ -36,6 +36,8 @@
       	</result>
     </action>
     
+    <!--fileDatasetList页面中原始数据的展示方法 dataSourceJson.action的返回值  !-->
+    
     <action name="allDbTypeJson" class="com.dv.action.DataSourceAction" method="allDbType" >
       	<result name="success" type="json">
       		<param name="root">allDbtype</param>   

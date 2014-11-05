@@ -132,7 +132,7 @@ public class DataSourceAction extends DataSourceBaseAction{
 		{
 			System.out.println("read.table");
 			picture="true";
-			c.eval("data<-read.table('"+filePath+"',header="+hasheadline+",sep='"+separator+"')"); //读取csv文件中的数据到R环境变量data中
+			c.eval("data<-read.table('"+filePath+"',header="+hasheadline+",sep='"+separator+"')"); //读取csv文件中的数据到R环境变量data中,参数为文件路径，首行标志量和分隔符
 			c.eval("{rcolname<-names(data);dim(rcolname)<-c(length(names(data)))}");
 			String colnames[]=c.eval("rcolname").asStringArray();
 			datacolnames=new String[colnames.length+1];
@@ -144,7 +144,7 @@ public class DataSourceAction extends DataSourceBaseAction{
 					datacolnames[i]=colnames[i-1];
 				}
 			}
-			Map<String,Object> session=ActionContext.getContext().getSession();
+			Map<String,Object> session=ActionContext.getContext().getSession(); //获取Session值
 			session.remove("colnames");
 			session.put("colnames",colnames);
 			String coltypes[]=ToolsFactory.getColType(filePath, hasheadline, separator, missing, colnames.length);

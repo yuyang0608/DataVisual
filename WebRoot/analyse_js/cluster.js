@@ -94,9 +94,10 @@ function kmeans_analyse()
 			
 			$("#result").append("<div id='scattermatrix'></div>");
 			seajs.use(["datav", "scatterplotMatrix"], function (DataV, ScatterplotMatrix) {
-		        var scatterplotMatrix = new ScatterplotMatrix("scattermatrix", {"width": 800, "height": 600, "margin": 50, "typeName": "Species", "tagDimen": "Petal.Length"});
+		        var scatterplotMatrix = new ScatterplotMatrix("scattermatrix", {"width": 800, "height": 600, "margin": 50});
 		        DataV.csv("iris.csv", function(dataSource) {
 		            scatterplotMatrix.setSource(dataSource);
+		            scatterplotMatrix.setOptions({"typeName": "Cluster"});
 		            scatterplotMatrix.setDimensionsX(["Sepal.Length", "Sepal.Width", "Petal.Length","Petal.Width"]);
 		            scatterplotMatrix.setDimensionsY(["Sepal.Length", "Sepal.Width", "Petal.Length","Petal.Width"]);
 		            scatterplotMatrix.setTypeName(["聚类簇1","聚类簇2","聚类簇3","聚类簇4","聚类簇5","聚类簇6","聚类簇7"]);
