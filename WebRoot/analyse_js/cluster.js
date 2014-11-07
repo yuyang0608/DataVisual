@@ -95,7 +95,7 @@ function kmeans_analyse()
 			$("#result").append("<div id='scattermatrix'></div>");
 			seajs.use(["datav", "scatterplotMatrix"], function (DataV, ScatterplotMatrix) {
 		        var scatterplotMatrix = new ScatterplotMatrix("scattermatrix", {"width": 800, "height": 600, "margin": 50});
-		        DataV.csv("iris.csv", function(dataSource) {
+		        DataV.csv("./results/results.csv", function(dataSource) {
 		            scatterplotMatrix.setSource(dataSource);
 		            scatterplotMatrix.setOptions({"typeName": "Cluster"});
 		            scatterplotMatrix.setDimensionsX(["Sepal.Length", "Sepal.Width", "Petal.Length","Petal.Width"]);

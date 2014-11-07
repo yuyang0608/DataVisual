@@ -50,8 +50,10 @@ public class Cluster extends DataMiningBaseAction{
 	public String Kmeans()
 	{
 		//String imagepath=getSavaPath().replace("\\", "//")+"//";
-		String imagepath=getSavaPath().replace("\\", "/")+"/"; //windows下路径格式
+		String imagepath = getSavaPath().replace("\\", "/")+"/"; //windows下路径格式
+		String resultspath = imagepath + "../results/";
 		System.out.println(imagepath);
+		System.out.println(resultspath);
 		imagename="result"+new Date().getTime()+".png";
 		imagename1="result1"+new Date().getTime()+".png";
 		StaticData sd = StaticData.getInstance();
@@ -59,8 +61,9 @@ public class Cluster extends DataMiningBaseAction{
 		Rengine c=sd.re;
 		Map<String,Object> session=ActionContext.getContext().getSession();
 		//c.eval("kc<-kmeans(x=na.omit(data[,c("+ids+")]),centers="+center+",iter.max="+itermax+",nstart="+nstart+",algorithm=c('"+algorithm+"'));");
-		c.eval("kc<-kmeans(x=na.omit(data[,c("+ids+")])" +
-				",centers="+center+",iter.max="+itermax+");");
+		c.eval("{ x <- na.omit(data[,c("+ids+")]);kc <- kmeans(x" +
+				",centers="+center+",iter.max="+itermax+"); }");
+		c.eval("{ Cluster <- kc$cluster; results <- cbind(x, Cluster); write.table(results, file='" + resultspath + "results.csv', row.name = F, quote = T, sep = ',');} ");
 		String picture=(String)session.get("picture");
 		if(picture.equals("true"))
 		{
